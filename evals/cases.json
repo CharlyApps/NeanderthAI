@@ -88,5 +88,14 @@
     "source_behavior": "Ponytail output cap and NeanderthAI stop-when-done rule.",
     "prohibited_regressions": "Unrelated cleanup, broad test invention, or ceremonial exploration.",
     "validation_criteria": "No post-pass scope expansion; final response reports change and passing test."
+  },
+  {
+    "id": "configurable-feedback",
+    "category": "feedback",
+    "input": "Use Neanderthal level 0 for this explanation, but keep build mode ultra.",
+    "expected_behavior": "Use concise full sentences while retaining ultra build minimalism and all technical detail.",
+    "source_behavior": "Caveman prose intensity and Ponytail build intensity remain independently configurable.",
+    "prohibited_regressions": "Caveman fragments at level 0, reduced reasoning, or changing build mode to lite.",
+    "validation_criteria": "Feedback is grammatical and concise; implementation still applies ultra YAGNI behavior."
   }
 ]

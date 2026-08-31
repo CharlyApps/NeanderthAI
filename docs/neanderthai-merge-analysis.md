@@ -24,7 +24,7 @@ Reproducible snapshots are retained in `sources/`. Original installed files were
 | Small runnable check | Non-trivial logic | Ponytail requires one minimal test/self-check; trivial one-liners need none | None | **Preserve**, generalized to proportional validation |
 | Deliberate shortcut marker | Known ceiling such as global lock | Ponytail comment records ceiling and upgrade trigger | Prefix was source-specific | **Replace** prefix with `neanderthai:` |
 | Concise prose | Caveman/brief/token requests | Caveman removes filler, hedging, articles; keeps technical accuracy | Ponytail already caps post-code prose | **Merge** into one terse-output rule |
-| Prose intensity | `lite`, `full`, `ultra` | Increasing grammatical and abbreviation compression | Names overlap Ponytail build intensity | **Merge**: shared level sets both; communication reference holds detail |
+| Prose intensity | `lite`, `full`, `ultra` | Increasing grammatical and abbreviation compression | Names overlap Ponytail build intensity | **Improve**: independent feedback levels `0–3`; legacy aliases retained |
 | Classical Chinese modes | `wenyan-lite/full/ultra` | Increasing classical-Chinese compression | Unique to Caveman; uncommon at runtime | **Preserve** behind progressive disclosure |
 | Auto-Clarity | Warning, destructive action, ordered steps, repeated question | Caveman temporarily restores full clarity | Supports precedence rules | **Preserve** and strengthen for ambiguity-sensitive work |
 | Exact technical artifacts | Code, errors, commits, PRs | Caveman leaves code unchanged and quotes errors exactly | None | **Preserve** |
@@ -35,7 +35,7 @@ Reproducible snapshots are retained in `sources/`. Original installed files were
 
 ## Conflict resolution
 
-The parents are complementary: Ponytail controls implementation; Caveman controls communication. The main conflict occurs when compressed prose threatens safety or comprehension. NeanderthAI uses this order: correctness, repository/user constraints, safety/reversibility, verifiability, task evidence, context cost, execution complexity. Therefore terse prose yields to precise grammar for warnings, irreversible actions, ordered procedures, and clarification.
+The parents are complementary: Ponytail controls implementation; Caveman controls communication. NeanderthAI exposes those as independent build and feedback controls so a user can request strict minimalism with fully grammatical feedback, or compact feedback without changing implementation decisions. The main conflict occurs when compressed prose threatens safety or comprehension. NeanderthAI uses this order: correctness, repository/user constraints, safety/reversibility, verifiability, task evidence, context cost, execution complexity. Therefore terse prose yields to precise grammar for warnings, irreversible actions, ordered procedures, and clarification.
 
 The second tension is between Ponytail's “trace the whole flow” and minimal context. NeanderthAI interprets “whole” as the smallest complete dependency surface, found by search and expanded only on evidence. This keeps root-cause quality without automatic repo-wide ingestion.
 

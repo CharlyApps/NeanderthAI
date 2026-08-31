@@ -7,10 +7,10 @@ Counts use one documented approximation for every file: `ceil(UTF-8 text charact
 | Ponytail source | 1654 |
 | Caveman source | 880 |
 | Naive combined baseline | 2534 |
-| NeanderthAI core | 1052 |
-| Typical invocation (core + one smallest relevant reference) | 1380 |
-| Worst relevant invocation (core + all references) | 1745 |
+| NeanderthAI core | 1129 |
+| Typical invocation (core + one smallest relevant reference) | 1457 |
+| Worst relevant invocation (core + all references) | 1847 |
 
-Core reduction versus naive concatenation: **58.5%**.
+Core reduction versus naive concatenation: **55.4%**.
 
-Progressive disclosure moves explicit communication variants (365 tokens) and failure recovery (328 tokens) out of the default path. Most direct tasks need only the core.
+Progressive disclosure moves explicit communication variants (390 tokens) and failure recovery (328 tokens) out of the default path. Most direct tasks need only the core.

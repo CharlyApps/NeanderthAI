@@ -175,7 +175,8 @@ def run_evals() -> None:
     invariants = [
         "search before reading", "root cause", "standard library", "native platform",
         "direct", "investigate", "deep", "stop when", "security", "accessibility",
-        "stop ponytail", "stop caveman", "wenyan", "quote errors exactly",
+        "stop ponytail", "stop caveman", "wenyan", "feedback 0", "neanderthal",
+        "quote errors exactly",
     ]
     absent = [item for item in invariants if item not in core]
     if missing or malformed or absent:

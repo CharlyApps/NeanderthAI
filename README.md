@@ -16,9 +16,19 @@ The canonical bundle uses portable `SKILL.md` frontmatter. Current official loca
 
 Sources: [OpenAI Codex skills](https://developers.openai.com/codex/skills), [Claude Code skills](https://code.claude.com/docs/en/slash-commands), and [GitHub Copilot skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills).
 
-## Build and install
+## Install without Python
 
-Requires Python 3.9+ and no third-party packages.
+NeanderthAI has no runtime dependencies. Download the repository ZIP and copy the matching folder from `dist/` to the project or personal location in the table above:
+
+- Codex: `dist/codex/.agents/skills/neanderthai`
+- Claude Code: `dist/claude/.claude/skills/neanderthai`
+- GitHub Copilot: `dist/copilot/.github/skills/neanderthai`
+
+This works with a file manager on restricted corporate computers; no script, installer, package manager, or executable permission is required.
+
+## Optional maintainer helper
+
+Python 3.9+ is used only to update, validate, or install from the canonical source. It has no third-party dependencies.
 
 ```sh
 python3 scripts/neanderthai.py all
@@ -30,6 +40,16 @@ python3 scripts/neanderthai.py install copilot --scope project --target /path/to
 Installation refuses to overwrite an existing skill. Review or remove the existing destination first.
 
 Invoke explicitly as `$neanderthai` in Codex or `/neanderthai` in Claude Code and Copilot CLI. Matching coding, YAGNI, minimal-solution, brief-output, Ponytail, or Caveman requests may activate it implicitly.
+
+Build strictness and writing compactness are separate:
+
+```text
+neanderthai build lite|full|ultra
+neanderthai feedback 0|1|2|3
+neanderthal 3                    # feedback shorthand
+```
+
+Feedback `0` uses clear full sentences, `1` is compact, `2` is classic caveman (default), and `3` is maximum safe “grunt” compression. Feedback level never reduces reasoning, validation, warnings, or implementation quality.
 
 ## Architecture
 
@@ -52,6 +72,7 @@ After installing, start a fresh session (or reload skills) and try:
 
 ```text
 Use NeanderthAI to add a date picker with the smallest verified change.
+Use NeanderthAI feedback 0 and explain the tradeoff clearly.
 Use NeanderthAI wenyan-full to explain why this component re-renders.
 ```
 

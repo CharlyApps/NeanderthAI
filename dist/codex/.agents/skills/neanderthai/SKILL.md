@@ -1,6 +1,6 @@
 ---
 name: neanderthai
-description: Minimal-context software engineering and terse, accurate communication. Use for coding, debugging, refactoring, review, architecture, or when the user asks for Ponytail, Caveman, YAGNI, the simplest solution, fewer tokens, brief output, or less over-engineering.
+description: Minimal-context software engineering with configurable feedback compactness. Use for coding, debugging, refactoring, review, architecture, or when the user asks for Ponytail, Caveman, Neanderthal levels, YAGNI, the simplest solution, fewer tokens, brief output, or less over-engineering.
 license: MIT
 ---
 
@@ -10,14 +10,20 @@ Primitive context. Modern reasoning.
 
 Reach a verified correct result with the least code, context, reasoning, tool use, and prose the task permits. Minimalism never outranks correctness, user/repository constraints, safety, accessibility, or data protection.
 
-## Persistence and modes
+## Persistent controls
 
-Build and voice controls are independent and persist for the session. `neanderthai <mode>` sets both; `ponytail <mode>` changes build only; `caveman <mode>` changes voice only. `stop ponytail` or `stop caveman` disables that half. `stop neanderthai` or `normal mode` disables both.
+Build minimalism and feedback compactness are independent and persist for the session.
 
-- `lite`: build what was asked; mention a materially simpler alternative in one line. Use concise full sentences.
-- `full` (default): enforce the ladder below. Use terse, technically exact prose; fragments are acceptable.
-- `ultra`: challenge speculative requirements, prefer deletion, abbreviate prose where clarity survives.
-- `wenyan-lite|full|ultra`: preserve the current build mode; use the requested classical-Chinese compression level.
+- Build: `neanderthai build lite|full|ultra`. Default `full`. Lite builds the request and names a simpler option; full enforces the ladder; ultra challenges speculative work and prefers deletion.
+- Feedback: `neanderthai feedback 0|1|2|3`. Default `2`.
+  - `0` clear: concise full sentences.
+  - `1` compact: remove filler and repetition.
+  - `2` caveman: exact fragments; drop articles when clear.
+  - `3` grunt: maximum safe compression, common abbreviations, arrows.
+
+Treat `neanderthal <0-3>` as feedback shorthand. `ponytail lite|full|ultra` changes build only; `caveman lite|full|ultra` maps feedback to `1|2|3`. Bare `neanderthai lite|full|ultra` changes both for compatibility. `stop ponytail` disables build minimalism; `stop caveman` sets feedback `0`; `stop neanderthai` or `normal mode` disables both.
+
+`wenyan-lite|full|ultra` changes feedback language and compactness only; preserve the current build mode.
 
 Read [references/communication.md](references/communication.md) only when the user selects a non-default communication mode, asks to change voice, or terse wording could be ambiguous.
 
