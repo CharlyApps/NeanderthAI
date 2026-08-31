@@ -1,0 +1,6 @@
+interface:
+  display_name: "NeanderthAI"
+  short_description: "Minimal context, code, tools, and prose"
+  default_prompt: "Use $neanderthai to solve this with the smallest verified change."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "reuse-native-date-input",
+    "category": "ponytail-unique",
+    "input": "Add a date picker to this plain HTML form.",
+    "expected_behavior": "Inspect the form and use the native date input unless a stated requirement exceeds it.",
+    "source_behavior": "Ponytail ladder: native platform before dependency or custom code.",
+    "prohibited_regressions": "Adding a picker package, wrapper abstraction, or speculative feature set.",
+    "validation_criteria": "Localized diff and the existing targeted form check passes."
+  },
+  {
+    "id": "wenyan-explanation",
+    "category": "caveman-unique",
+    "input": "Use NeanderthAI wenyan-full to explain why this component re-renders.",
+    "expected_behavior": "Explain accurately in terse classical Chinese while preserving identifiers and code exactly.",
+    "source_behavior": "Caveman wenyan-full communication mode.",
+    "prohibited_regressions": "Changing code, mistranslating identifiers, or omitting the cause.",
+    "validation_criteria": "Cause and remedy remain technically complete despite compressed prose."
+  },
+  {
+    "id": "minimal-code-minimal-report",
+    "category": "overlap",
+    "input": "Add CSV column summation and keep the answer brief.",
+    "expected_behavior": "Use the standard CSV facilities already present, add one runnable check for parsing logic, and report tersely.",
+    "source_behavior": "Ponytail minimizes implementation; Caveman minimizes prose.",
+    "prohibited_regressions": "New data-frame dependency, verbose tutorial, or skipped malformed-input handling at the trust boundary.",
+    "validation_criteria": "Targeted check covers valid and malformed input; final answer names result and check."
+  },
+  {
+    "id": "destructive-warning-overrides-terse",
+    "category": "conflict",
+    "input": "In ultra mode, tell me how to run the irreversible production migration.",
+    "expected_behavior": "Use complete, unambiguous language for the warning and ordered procedure, then resume terse mode.",
+    "source_behavior": "Caveman Auto-Clarity resolved by safety and correctness precedence.",
+    "prohibited_regressions": "Compressed warning, ambiguous order, or implied authorization to execute.",
+    "validation_criteria": "Irreversibility and required confirmation are explicit before any command."
+  },
+  {
+    "id": "trivial-constant",
+    "category": "trivial",
+    "input": "Change the footer year from 2025 to 2026.",
+    "expected_behavior": "Read the target, make one edit, run the smallest available check, stop.",
+    "source_behavior": "Ponytail locality plus terse result reporting.",
+    "prohibited_regressions": "Repo-wide architecture analysis, new helper, or a new test for a literal edit.",
+    "validation_criteria": "One localized change; concise final response."
+  },
+  {
+    "id": "cross-cutting-auth-refactor",
+    "category": "deep",
+    "input": "Replace session authentication across the service without breaking API clients.",
+    "expected_behavior": "Map auth boundaries and callers, preserve security checks, implement incrementally, and validate multiple levels.",
+    "source_behavior": "Ponytail insists on full understanding and safety despite minimalism.",
+    "prohibited_regressions": "Direct-mode guess, reduced validation, or speculative framework rewrite.",
+    "validation_criteria": "Relevant unit and integration checks pass; diff stays within mapped boundaries."
+  },
+  {
+    "id": "large-ci-log",
+    "category": "context-heavy",
+    "input": "Fix the failure in this 80,000-line CI log and repository.",
+    "expected_behavior": "Search/filter the error signal first, inspect only related code, then widen if evidence demands it.",
+    "source_behavior": "NeanderthAI dynamic token optimization built from both parents' efficiency goals.",
+    "prohibited_regressions": "Dumping the full log or reading the whole repository before narrowing.",
+    "validation_criteria": "Captured evidence is a small relevant slice and the failing check is reproduced or explicitly static-only."
+  },
+  {
+    "id": "preexisting-test-failure",
+    "category": "recovery",
+    "input": "The targeted test fails after my change, but the branch may already be red.",
+    "expected_behavior": "Capture the smallest error, compare against prior behavior, classify introduced/pre-existing/uncertain, and avoid unrelated fixes.",
+    "source_behavior": "NeanderthAI adds deterministic recovery without weakening Ponytail scope control.",
+    "prohibited_regressions": "Blind reruns, hiding the failure, or fixing unrelated tests.",
+    "validation_criteria": "Report includes evidence-backed classification and exact remaining command."
+  },
+  {
+    "id": "ambiguous-cache-request",
+    "category": "ambiguous",
+    "input": "Make these responses faster, maybe add caching.",
+    "expected_behavior": "Inspect the actual hot path and reuse a standard or installed cache only if evidence supports caching; otherwise make the smallest measured fix.",
+    "source_behavior": "Ponytail full mode ships a sensible reversible default instead of stalling.",
+    "prohibited_regressions": "Hand-rolled cache framework or asking questions answerable by code and profiling evidence.",
+    "validation_criteria": "Change addresses observed bottleneck and includes one targeted performance/correctness check."
+  },
+  {
+    "id": "stop-after-pass",
+    "category": "stop",
+    "input": "Fix the null guard; the focused regression test now passes.",
+    "expected_behavior": "Inspect the diff, confirm acceptance criteria, and finish.",
+    "source_behavior": "Ponytail output cap and NeanderthAI stop-when-done rule.",
+    "prohibited_regressions": "Unrelated cleanup, broad test invention, or ceremonial exploration.",
+    "validation_criteria": "No post-pass scope expansion; final response reports change and passing test."
+  }
+]
