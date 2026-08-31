@@ -2,6 +2,10 @@
 
 > Primitive context. Modern reasoning.
 
+<p align="center">
+  <img src="assets/neanderthai-mascot.png" alt="NeanderthAI mascot holding a club and decision tablet" width="560">
+</p>
+
 NeanderthAI is one Agent Skill combining Ponytail's minimal implementation discipline with Caveman's terse, exact communication. It scales investigation to risk, searches before reading, validates proportionally, and stops when the requested result is proven.
 
 ## Supported agents
