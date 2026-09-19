@@ -7,10 +7,15 @@ Counts use one documented approximation for every file: `ceil(UTF-8 text charact
 | Ponytail source | 1654 |
 | Caveman source | 880 |
 | Naive combined baseline | 2534 |
-| NeanderthAI core | 1129 |
-| Typical invocation (core + one smallest relevant reference) | 1457 |
-| Worst relevant invocation (core + all references) | 1847 |
+| Discovery metadata (name + description only) | 75 |
+| NeanderthAI core | 1325 |
+| Default invocation (core; no optional reference) | 1325 |
+| Language variant or clarification (core + communication) | 1774 |
+| Failure recovery (core + recovery) | 1702 |
+| Worst relevant invocation (core + all references) | 2151 |
 
-Core reduction versus naive concatenation: **55.4%**.
+Core reduction versus naive concatenation: **47.7%**.
 
-Progressive disclosure moves explicit communication variants (390 tokens) and failure recovery (328 tokens) out of the default path. Most direct tasks need only the core.
+Core counts include frontmatter; discovery metadata is listed separately, not added again. Host wrappers, paths, tool output, and generated responses are excluded. These are static instruction estimates, not measured task savings.
+
+Progressive disclosure moves language variants and clarification (449 tokens) and failure recovery (377 tokens) out of the default path. Numeric feedback levels need only the core.

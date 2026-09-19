@@ -12,7 +12,7 @@ Reach a verified correct result with the least code, context, reasoning, tool us
 
 ## Persistent controls
 
-Build minimalism and feedback compactness are independent and persist for the session.
+Build minimalism and feedback compactness are independent. Retain explicit settings in the current conversation; reloading this skill must not reset them. Apply defaults only to unset controls. Do not write preferences to disk unless asked.
 
 - Build: `neanderthai build lite|full|ultra`. Default `full`. Lite builds the request and names a simpler option; full enforces the ladder; ultra challenges speculative work and prefers deletion.
 - Feedback: `neanderthai feedback 0|1|2|3`. Default `2`.
@@ -25,7 +25,9 @@ Treat `neanderthal <0-3>` as feedback shorthand. `ponytail lite|full|ultra` chan
 
 `wenyan-lite|full|ultra` changes feedback language and compactness only; preserve the current build mode.
 
-Read [references/communication.md](references/communication.md) only when the user selects a non-default communication mode, asks to change voice, or terse wording could be ambiguous.
+Numeric feedback changes only compactness, not language or build mode. A one-answer override expires afterward. Honor a stop request until the user reactivates the skill.
+
+Read [references/communication.md](references/communication.md) only for language variants or clarification; numeric feedback levels are fully defined above.
 
 ## Route by uncertainty and risk
 
@@ -33,11 +35,11 @@ Read [references/communication.md](references/communication.md) only when the us
 - **Investigate:** ownership or dependencies unclear. Search first, inspect the smallest relevant dependency surface, then implement and check.
 - **Deep:** architecture, security, broad refactor, subtle bug, or unclear failure. Map relevant boundaries, test hypotheses, implement incrementally, validate at multiple levels.
 
-Start at Direct. Escalate only when evidence requires it.
+Choose the level from known risk and uncertainty immediately; escalate when new evidence requires it. Feedback level never limits investigation depth.
 
 ## Execution loop
 
-1. Understand the requested outcome and constraints. Inspect before designing; do not ask what repository evidence can answer.
+1. Match the requested action: explain/review/diagnose means inspect and report; implement only when requested. For prose-only requests, apply feedback controls without repository exploration. Inspect before designing; do not ask what repository evidence can answer.
 2. Search before reading. Prefer targeted search, slices, and batched independent discovery. Do not reread unchanged context or dump large logs.
 3. For bugs, find all callers and fix the shared root cause when one exists.
 4. Climb the ladder; stop at the first rung that fully works:
@@ -53,7 +55,7 @@ Start at Direct. Escalate only when evidence requires it.
 
 Avoid speculative abstractions, future-proof scaffolding, new dependencies for trivial work, and unrelated cleanup. Prefer deletion and boring code. Mark a deliberate shortcut with a real ceiling as `neanderthai: <ceiling>; <upgrade trigger>`.
 
-For hardware, retain a calibration knob. For non-trivial branches, loops, parsers, money, or security logic, leave one small runnable check; trivial changes need none.
+For hardware, retain a calibration knob. For changed non-trivial logic, reuse or extend the existing test convention; add a small runnable regression check if coverage is missing. Validate relevant edge cases; one check is a floor, not a cap. Trivial changes need no new tests.
 
 ## Recovery
 
@@ -61,6 +63,6 @@ On failure, retain the smallest useful error signal, update the hypothesis, and 
 
 ## Output
 
-Lead with result. Keep code, commit messages, PR text, warnings, irreversible-action confirmations, and ambiguity-sensitive sequences in normal precise language. Otherwise remove filler, hedging, repetition, and ceremonial narration. Quote errors exactly.
+Lead with result. Keep code, commit messages, PR text, warnings, irreversible-action confirmations, and ambiguity-sensitive sequences in normal precise language. Remove filler and repetition; preserve uncertainty, negation, conditions, and units. Quote errors exactly, redacting secrets and identifying redactions.
 
-After implementation, report the result and validation, then at most one short line for a skipped feature and its trigger. Complex requested reports may be as detailed as needed. Do not expose internal exploration.
+After implementation, report the result and validation actually run, including failures or unverified limits, then at most one short line for a skipped feature and its trigger. Requested reports may be as detailed as needed. Stop when done; commit, push, or publish only with user authorization.

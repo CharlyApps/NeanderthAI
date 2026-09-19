@@ -23,7 +23,7 @@ Reproducible snapshots are retained in `sources/`. Original installed files were
 | Hardware calibration | Physical timing/sensors | Ponytail retains a tuning knob | Specialized token cost | **Preserve** as one core sentence |
 | Small runnable check | Non-trivial logic | Ponytail requires one minimal test/self-check; trivial one-liners need none | None | **Preserve**, generalized to proportional validation |
 | Deliberate shortcut marker | Known ceiling such as global lock | Ponytail comment records ceiling and upgrade trigger | Prefix was source-specific | **Replace** prefix with `neanderthai:` |
-| Concise prose | Caveman/brief/token requests | Caveman removes filler, hedging, articles; keeps technical accuracy | Ponytail already caps post-code prose | **Merge** into one terse-output rule |
+| Concise prose | Caveman/brief/token requests | Caveman removes filler, hedging, articles; keeps technical accuracy | Removing meaningful uncertainty contradicts accuracy | **Merge** into terse output that retains confidence, conditions, units, and negations |
 | Prose intensity | `lite`, `full`, `ultra` | Increasing grammatical and abbreviation compression | Names overlap Ponytail build intensity | **Improve**: independent feedback levels `0–3`; legacy aliases retained |
 | Classical Chinese modes | `wenyan-lite/full/ultra` | Increasing classical-Chinese compression | Unique to Caveman; uncommon at runtime | **Preserve** behind progressive disclosure |
 | Auto-Clarity | Warning, destructive action, ordered steps, repeated question | Caveman temporarily restores full clarity | Supports precedence rules | **Preserve** and strengthen for ambiguity-sensitive work |
@@ -50,3 +50,32 @@ The second tension is between Ponytail's “trace the whole flow” and minimal 
 - GitHub Copilot accepts `.github/skills`, `.claude/skills`, or `.agents/skills` for project skills and the same required `name`/`description` frontmatter.
 
 One canonical source is copied deterministically into isolated platform package roots under `dist/`, avoiding divergent prompts and avoiding duplicate registration in the repository root.
+
+## Enhancement review: 2026-09-18
+
+The review found these specific issues and addressed them without adding runtime dependencies:
+
+| Observed issue | Change |
+|---|---|
+| Removing “hedging” could turn an unconfirmed cause into a fact. | Preserve uncertainty, conditions, units, negations, and actual test status at every feedback level. |
+| The implementation loop also triggered for review and explanation requests. | Route by requested action before changing files; prose-only work requires no repo exploration. |
+| “Start at Direct” conflicted with already-known security or architectural risk. | Select the appropriate investigation level immediately from available evidence. |
+| Reloading/defaults, temporary overrides, and numeric language changes were ambiguous. | Preserve explicit conversation settings, expire one-answer overrides, and keep language/build independent. |
+| Recovery labeled a failure introduced merely because the edited file was on its path. | Require causal evidence; compare equivalent baselines without discarding working changes. |
+| “Fix only introduced failures” excluded the existing bug the user requested. | Permit the requested bug fix and new regressions; retain scope boundaries for unrelated failures. |
+| A one-test rule could duplicate existing tests or cap security validation. | Reuse the repository's test convention and validate relevant edge cases. |
+| Reference links outside `SKILL.md` went unchecked; binary assets could crash text checks; the Windows-path regex was overescaped. | Validate inline links in every Markdown file, require local targets within the bundle, skip binary assets in text checks, and correct the regex. |
+| Eval “invariants” were merely required words; even empty case fields could pass. | Validate nonempty typed fields, unique IDs, and required categories, explicitly reporting that no model behavior was tested. |
+| The “typical invocation” estimate arbitrarily added the smallest reference. | Show separate core-only, communication, recovery, and all-reference scenarios plus discovery metadata. |
+
+Four standard-library regression tests exercise the tooling changes. Five focused live prompt checks use Claude Code 2.1.267 with the canonical core and both references appended, all tools disabled, user/project settings excluded, hooks disabled, and no session persistence. Only case inputs are supplied, not expected outputs or scoring criteria. These checks assess responses against the rubric; they do not test skill discovery, real multi-turn persistence, autonomous tool choices, or behavior on every supported host.
+
+| Live case | Observed response | Rubric result |
+|---|---|---|
+| `compressed-uncertainty` | Retained “unconfirmed”, TTL `30s`, and “Regression test not run.” | Pass |
+| `repair-requested-existing-bug` | Proposed `>= 18` and assertions for ages 18 and 17; explicitly said it did not run them. | Pass |
+| `temporary-feedback-override` | Identified build `ultra` and restored feedback `3` after the temporary override. | Pass for the supplied conversation scenario |
+| `review-without-edits` | Identified default-allow access, suggested an allowlist, and said no changes were made. | Pass for response content; mutation prevention enforced by disabled tools |
+| `failure-attribution-needs-evidence` | Called attribution uncertain and proposed an equivalent isolated baseline comparison. | Pass |
+
+No before/after model benchmark was run, so these results support the revised instructions without establishing a measured improvement in model accuracy or task token consumption.

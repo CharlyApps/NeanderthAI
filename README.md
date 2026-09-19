@@ -53,7 +53,9 @@ neanderthai feedback 0|1|2|3
 neanderthal 3                    # feedback shorthand
 ```
 
-Feedback `0` uses clear full sentences, `1` is compact, `2` is classic caveman (default), and `3` is maximum safe “grunt” compression. Feedback level never reduces reasoning, validation, warnings, or implementation quality.
+These are instructions to send in your agent conversation, not terminal commands. Feedback `0` uses clear full sentences, `1` is compact, `2` is classic caveman (default), and `3` is maximum safe “grunt” compression. Feedback level never reduces reasoning, validation, warnings, or implementation quality. Uncertainty, units, and unrun tests remain explicit at every level.
+
+Settings persist within the conversation without a configuration file. “Feedback 0 for this answer” is temporary; “feedback 0 from now on” persists. Numeric changes preserve build mode and language. `normal mode` disables the skill until you reactivate it.
 
 ## Architecture
 
@@ -66,7 +68,9 @@ evals/                     behavioral specifications
 scripts/neanderthai.py     build, install, validation, audit, eval checks
 ```
 
-Edit only `skill-src/neanderthai`, then run `python3 scripts/neanderthai.py all`. Validation hashes every generated package against the canonical source, checks frontmatter and links, rejects user-specific absolute paths, and verifies eval coverage.
+Edit only `skill-src/neanderthai`, then run `python3 scripts/neanderthai.py all`. Validation hashes every generated package against the canonical source, checks basic frontmatter and local inline Markdown links throughout the bundle, rejects user-specific absolute paths, and verifies eval coverage. It uses a lightweight frontmatter parser, not a complete YAML validator.
+
+Run maintenance regression tests with `python3 -m unittest discover -s tests -v`. They exercise reference resolution, binary asset handling, Windows paths, and eval schema rejection using temporary directories.
 
 The core is a compact router. Non-default communication modes and failure recovery load only when relevant; measured costs are in [the token audit](docs/token-audit.md).
 
@@ -80,4 +84,6 @@ Use NeanderthAI feedback 0 and explain the tradeoff clearly.
 Use NeanderthAI wenyan-full to explain why this component re-renders.
 ```
 
-Static packaging tests do not claim model-level behavioral equivalence. The cases in `evals/cases.json` are portable prompts and scoring criteria for host-specific evaluation harnesses.
+`python3 scripts/neanderthai.py eval` checks only the schema and coverage of `evals/cases.json`; it does not run a model or prove behavioral equivalence. For behavioral testing, give an agent the skill and a case's `input`, then assess its response and tool trace against `expected_behavior`, `prohibited_regressions`, and `validation_criteria`. Keep those scoring fields out of the test prompt.
+
+The [enhancement review](docs/neanderthai-merge-analysis.md#enhancement-review-2026-09-18) records the observed problems, changes, and limits of the live checks performed.

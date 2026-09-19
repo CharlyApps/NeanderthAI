@@ -11,6 +11,7 @@ import re
 import shutil
 from pathlib import Path
 from typing import Optional
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "skill-src" / "neanderthai"
@@ -94,13 +95,19 @@ def validate_tree(path: Path) -> list[str]:
         errors.append(f"{skill}: description exceeds 1024 characters")
     if not re.fullmatch(r"[a-z0-9-]{1,64}", meta.get("name", "")):
         errors.append(f"{skill}: invalid portable skill name")
-    text = skill.read_text(encoding="utf-8")
-    for link in re.findall(r"\[[^]]+\]\(([^)]+)\)", text):
-        if "://" not in link and not (path / link.split("#", 1)[0]).is_file():
-            errors.append(f"{skill}: broken relative link {link}")
     for item in files(path):
+        if item.suffix not in {".md", ".yaml", ".yml", ".py", ".json"}:
+            continue
         content = item.read_text(encoding="utf-8")
-        if re.search(r"(?:/Users/|[A-Za-z]:\\\\Users\\\\)", content):
+        if item.suffix == ".md":
+            for link in re.findall(r"\[[^]]+\]\(([^)]+)\)", content):
+                url = urlsplit(link)
+                if url.scheme or url.netloc or not url.path:
+                    continue
+                target = (item.parent / unquote(url.path)).resolve()
+                if path.resolve() not in target.parents or not target.is_file():
+                    errors.append(f"{item}: broken or out-of-bundle relative link {link}")
+        if re.search(r"(?:/Users/|[A-Za-z]:\\Users\\)", content):
             errors.append(f"{item}: contains a user-specific absolute path")
         if "TODO" in content or "REPLACE_ME" in content:
             errors.append(f"{item}: contains unfinished placeholder")
@@ -133,7 +140,7 @@ def audit(write: bool = False) -> str:
     core_count = approximate_tokens(core)
     ref_counts = {p.name: approximate_tokens(p) for p in refs}
     naive = sum(source_counts.values())
-    typical = core_count + min(ref_counts.values(), default=0)
+    metadata_count = math.ceil(len("\n".join(frontmatter(core)[key] for key in ("name", "description"))) / 4)
     worst = core_count + sum(ref_counts.values())
     reduction = (1 - core_count / naive) * 100
     report = f"""# Token audit
@@ -145,13 +152,18 @@ Counts use one documented approximation for every file: `ceil(UTF-8 text charact
 | Ponytail source | {source_counts['ponytail']} |
 | Caveman source | {source_counts['caveman']} |
 | Naive combined baseline | {naive} |
+| Discovery metadata (name + description only) | {metadata_count} |
 | NeanderthAI core | {core_count} |
-| Typical invocation (core + one smallest relevant reference) | {typical} |
+| Default invocation (core; no optional reference) | {core_count} |
+| Language variant or clarification (core + communication) | {core_count + ref_counts.get('communication.md', 0)} |
+| Failure recovery (core + recovery) | {core_count + ref_counts.get('recovery.md', 0)} |
 | Worst relevant invocation (core + all references) | {worst} |
 
 Core reduction versus naive concatenation: **{reduction:.1f}%**.
 
-Progressive disclosure moves explicit communication variants ({ref_counts.get('communication.md', 0)} tokens) and failure recovery ({ref_counts.get('recovery.md', 0)} tokens) out of the default path. Most direct tasks need only the core.
+Core counts include frontmatter; discovery metadata is listed separately, not added again. Host wrappers, paths, tool output, and generated responses are excluded. These are static instruction estimates, not measured task savings.
+
+Progressive disclosure moves language variants and clarification ({ref_counts.get('communication.md', 0)} tokens) and failure recovery ({ref_counts.get('recovery.md', 0)} tokens) out of the default path. Numeric feedback levels need only the core.
 """
     if write:
         target = ROOT / "docs" / "token-audit.md"
@@ -165,23 +177,22 @@ def run_evals() -> None:
     cases = json.loads((ROOT / "evals" / "cases.json").read_text(encoding="utf-8"))
     required = {
         "ponytail-unique", "caveman-unique", "overlap", "conflict", "trivial",
-        "deep", "context-heavy", "recovery", "ambiguous", "stop",
+        "deep", "context-heavy", "recovery", "ambiguous", "stop", "feedback",
+        "scope", "uncertainty", "state", "requested-bug",
     }
+    if not isinstance(cases, list) or any(not isinstance(case, dict) for case in cases):
+        raise SystemExit("eval validation failed: cases must be a list of objects")
+    fields = {"id", "category", "input", "expected_behavior", "source_behavior", "prohibited_regressions", "validation_criteria"}
+    malformed = [index for index, case in enumerate(cases)
+                 if any(not isinstance(case.get(field), str) or not case[field].strip() for field in fields)]
+    if malformed:
+        raise SystemExit(f"eval validation failed: missing or empty text fields at indexes {malformed}")
     categories = {case.get("category") for case in cases}
     missing = required - categories
-    fields = {"id", "category", "input", "expected_behavior", "source_behavior", "prohibited_regressions", "validation_criteria"}
-    malformed = [case.get("id", "<unnamed>") for case in cases if fields - case.keys()]
-    core = (SOURCE / "SKILL.md").read_text(encoding="utf-8").lower()
-    invariants = [
-        "search before reading", "root cause", "standard library", "native platform",
-        "direct", "investigate", "deep", "stop when", "security", "accessibility",
-        "stop ponytail", "stop caveman", "wenyan", "feedback 0", "neanderthal",
-        "quote errors exactly",
-    ]
-    absent = [item for item in invariants if item not in core]
-    if missing or malformed or absent:
-        raise SystemExit(f"eval validation failed: missing={sorted(missing)} malformed={malformed} absent={absent}")
-    print(f"validated {len(cases)} behavioral eval specifications and {len(invariants)} core invariants")
+    duplicate_ids = len({case["id"] for case in cases}) != len(cases)
+    if missing or duplicate_ids:
+        raise SystemExit(f"eval validation failed: missing={sorted(missing)} duplicate_ids={duplicate_ids}")
+    print(f"validated {len(cases)} eval specifications (coverage and schema only; no model behavior tested)")
 
 
 def install(agent: str, scope: str, target: Optional[Path]) -> None:
